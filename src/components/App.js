@@ -3,7 +3,7 @@ import Header from "./Header";
 import ListingsContainer from "./ListingsContainer";
 
 function App() {
-  
+  const [search, setSearch] = useState('');
   const [listings, setListings] = useState([]);
 
   useEffect( () => {
@@ -19,11 +19,17 @@ function App() {
     )
     setListings(updatedListing)
   }
+
+  const searchListings = listings.filter( listing => {
+      return listing.description.toLowerCase().includes(search.toLowerCase())
+    })
+
+  console.log(searchListings)
   
   return (
     <div className="app">
-      <Header />
-      <ListingsContainer listings={listings} deleteListing={deleteListing}/>
+      <Header search={ search } setSearch={ setSearch } />
+      <ListingsContainer listings={searchListings} deleteListing={deleteListing}/>
     </div>
   );
 }
