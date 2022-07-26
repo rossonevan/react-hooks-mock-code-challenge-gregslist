@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ListingCard from "./ListingCard";
 
-function ListingsContainer({listings}) {
-  
-  
+function ListingsContainer({listings, deleteListing}) {
+  console.log(listings)
   
   return (
     <main>
@@ -11,9 +10,8 @@ function ListingsContainer({listings}) {
         {listings.map((listing) => {
           return <ListingCard 
           key={listing.id}
-          description={listing.description}
-          image={listing.image}
-          location={listing.location}
+          listing={listing}
+          deleteListing={deleteListing}
           />
         })}
       </ul>

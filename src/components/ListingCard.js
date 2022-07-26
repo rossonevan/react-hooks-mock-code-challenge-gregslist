@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 
-function ListingCard({description, image, location}) {
+function ListingCard({listing, deleteListing}) {
   const [favorited, setFavorited] = useState(false)
 
   const onFavoriteClick = () => {
     setFavorited(() => !favorited)
   }
 
+  function handleDelete() {
+    fetch(`http://localhost:6001/listings/${listing.id}`, {
+      method: 'DELETE',
+  })
+    .then(res => res.json())
+    .then(() => console.log('deleted'))
+    deleteListing(listing.id)
+}
+
   return (
     <li className="card">
       <div className="image">
         <span className="price">$0</span>
-        <img src={image} alt={"description"} />
+        <img src={listing.image} alt={"description"} />
       </div>
       <div className="details">
         {favorited ? (
@@ -29,9 +38,13 @@ function ListingCard({description, image, location}) {
             ☆
           </button>
         )}
-        <strong>{description}</strong>
-        <span> · {location}</span>
-        <button className="emoji-button delete">🗑</button>
+        <strong>{listing.description}</strong>
+        <span> · {listing.location}</span>
+        <button 
+        className="emoji-button delete"
+        onClick={handleDelete}
+        >
+          🗑</button>
       </div>
     </li>
   );
